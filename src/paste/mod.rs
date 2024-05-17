@@ -58,6 +58,7 @@ pub fn main(args: impl IntoIterator<Item = String>) -> Result<(), Box<dyn Error>
         for part in line {
             match &part {
                 LinePart::Text(text) => type_text(&mut enigo, text)?,
+                LinePart::Delay(delay) => sleep(Duration::from_millis(*delay)),
                 LinePart::Arg(arg) => type_text(&mut enigo, &arg_values[arg])?,
                 LinePart::KeyCombo(keys) => key_combo(&mut enigo, keys)?,
             }

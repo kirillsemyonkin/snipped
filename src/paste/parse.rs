@@ -8,6 +8,7 @@ use log::warn;
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum LinePart {
     Text(String),
+    Delay(u64),
     Arg(String),
     KeyCombo(Vec<enigo::Key>),
 }
@@ -24,6 +25,7 @@ pub fn snippet_line(
 ) -> Result<(), Box<dyn std::error::Error>> {
     enum ProcessingPart {
         Text(String),
+        Delay(String),
         Arg {
             value: String,
             default: Option<String>,
@@ -48,6 +50,12 @@ pub fn snippet_line(
             // Text and staring others
             //
 
+            // start delay with `$'`
+            Text(_) if ch == '$' && chars.peek() == Some(&'\'') => {
+                chars.next();
+                result.push(Delay(String::new()));
+            },
+
             // start arg with `$@`
             Text(_) if ch == '$' && chars.peek() == Some(&'@') => {
                 chars.next();
@@ -70,6 +78,16 @@ pub fn snippet_line(
 
             // just push char at the end of text
             Text(text) => text.push(ch),
+
+            //
+            // Delay
+            //
+            Delay(_) if ch == '$' => {
+                result.push(Text(String::new()));
+            },
+
+            // just push char at the end of delay string
+            Delay(delay) => delay.push(ch),
 
             //
             // Arg
@@ -212,6 +230,7 @@ pub fn snippet_line(
     for part in result {
         line.push(match part {
             Text(text) => LinePart::Text(text),
+            Delay(delay) => LinePart::Delay(delay.parse()?),
             Arg { value, .. } => LinePart::Arg(value),
             KeyCombo(combo) => {
                 let mut res = Vec::new();

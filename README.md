@@ -146,6 +146,8 @@ input a target snippet into the program - a regular text file with some special 
   The `Alt` key will be pressed, `Tab` will be pressed, released, pressed again, and then the `$`
   ends with releasing all currently held keys (first `Tab`, then `Alt`).
 
+- The `$'` combination will introduce delay in milliseconds, e.g. `$'1000$` is 1 second.
+
 - Processed comments are written with `##` at the beginning of the line. With a single `#` they are
   printed into the output as normal text. The arguments written in the comment will still be asked,
   so you can use comments to order the arguments and to give each snippet a source-code explanation.
