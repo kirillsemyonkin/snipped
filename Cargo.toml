@@ -1,0 +1,26 @@
+[package]
+name = "snipped"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+indexmap = { version = "2.2.6", features = ["serde"] }
+log = "0.4.21"
+simplelog = { version = "0.12.2", features = ["paris"] }
+url = { version = "2.5.0", features = ["serde"] }
+reqwest = { version = "0.12.4", features = ["blocking", "json"] }
+serde = { version = "1.0.200", features = ["derive"] }
+constcat = "0.5.0"
+tempfile = "3.10.1"
+petname = "2.0.2"
+ctrlc = "3.4.4"
+clipboard-win = "5.3.1"
+sysinfo = "0.30.11"
+image = "0.25.1"
+serde_plain = "1.0.2"
+
+[dependencies.enigo]
+version = "0.2.0"
+git = "https://github.com/kirillsemyonkin/enigo"
+branch = "fix-windows-shift-state"
+features = ["serde"]
