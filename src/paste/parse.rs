@@ -44,6 +44,10 @@ pub fn snippet_line(
             .last_mut()
             .unwrap()
         {
+            //
+            // Text and staring others
+            //
+
             // start arg with `$@`
             Text(_) if ch == '$' && chars.peek() == Some(&'@') => {
                 chars.next();
@@ -51,6 +55,11 @@ pub fn snippet_line(
                     value: String::new(),
                     default: None,
                 });
+            },
+
+            // start arglist with `$[`
+            Text(_) if ch == '$' && chars.peek() == Some(&'[') => {
+                todo!("Arglist is not supported yet");
             },
 
             // start key combo with `$!`
@@ -61,6 +70,10 @@ pub fn snippet_line(
 
             // just push char at the end of text
             Text(text) => text.push(ch),
+
+            //
+            // Arg
+            //
 
             // handle `$@$` as `$@` (default is ignored)
             Arg { value, .. } if ch == '$' && value.is_empty() => {
@@ -109,6 +122,16 @@ pub fn snippet_line(
                 default: Some(default),
                 ..
             } => default.push(ch),
+
+            //
+            // Arglist
+            //
+
+            // TODO
+
+            //
+            // KeyCombo
+            //
 
             // handle key combo separator
             KeyCombo(combo) if ch == '+' || ch == ' ' => {

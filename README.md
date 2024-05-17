@@ -128,6 +128,10 @@ input a target snippet into the program - a regular text file with some special 
   echo Hello world!
   ```
 
+- Argument lists (Arglists `$[`) are the same as previous, except the line containing them will be
+  repeated for every argument value that user inputs, until user presses the enter key. For usage as
+  a command parameter, this involves repeating the key-value pair multiple times.
+
 - The `$!` combination switches from the text mode to the manual mode: you will have to tell the
   program to press all the necessary keys instead. The keys will be pressed until the end (`$`), and
   then released in reverse order. If the key is already pressed, it will be toggled to release
